@@ -34,16 +34,16 @@ def send_message(browser, msg):
     element.send_keys(msg)
     element.submit()
 
+
 def get_message(browser):
-    time.sleep(2)
     while True:
         time.sleep(1)
         try:
             browser.find_element_by_id("snipTextIcon")
         except NoSuchElementException:
             pass
-        break
-    time.sleep(2)
+        if browser.find_element_by_id(OUTPUT_FORM).text.endswith(('.', '?', '!', ',')):
+            break
     element = browser.find_element_by_id(OUTPUT_FORM)
     return element.text
 
@@ -60,8 +60,6 @@ if __name__ == '__main__':
         msg = get_message(browser1)
         print("Steve: " + msg)
         send_message(browser2, msg)
-        time.sleep(1)
         msg = get_message(browser2)
         print("Jessica: " + msg)
         send_message(browser1, msg)
-        time.sleep(1)
